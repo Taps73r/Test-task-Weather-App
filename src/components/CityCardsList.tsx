@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { CityCard } from "./CityCard";
+import { CityCard } from "./CityCard/CityCard";
 
 export function CityCardsList() {
     const { cities, error } = useSelector(
@@ -8,7 +8,7 @@ export function CityCardsList() {
     );
 
     return (
-        <section>
+        <section className="flex flex-wrap justify-center gap-4 p-4">
             {cities?.map((item, index) => (
                 <CityCard
                     country={item.weather.sys.country}

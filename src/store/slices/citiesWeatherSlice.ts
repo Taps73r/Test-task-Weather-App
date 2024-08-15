@@ -22,6 +22,7 @@ const weatherSlice = createSlice({
             state.cities = state.cities.filter(
                 (city) => city.cityName !== action.payload
             );
+            localStorage.setItem("cities", JSON.stringify(state.cities));
         },
     },
     extraReducers: (builder) => {
@@ -32,7 +33,20 @@ const weatherSlice = createSlice({
             })
             .addCase(fetchWeather.fulfilled, (state, action) => {
                 state.loading = false;
-                state.cities.push(action.payload);
+                const existingCityIndex = state.cities.findIndex(
+                    (city) => city.cityName === action.payload.cityName
+                );
+                if (existingCityIndex >= 0) {
+                    state.cities[existingCityIndex] = action.payload;
+                } else {
+                    state.cities = [action.payload, ...state.cities];
+                    localStorage.setItem(
+                        "cities",
+                        JSON.stringify(
+                            state.cities.map((city) => city.cityName)
+                        )
+                    );
+                }
             })
             .addCase(fetchWeather.rejected, (state, action) => {
                 state.loading = false;

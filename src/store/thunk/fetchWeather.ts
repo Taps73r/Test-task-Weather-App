@@ -5,14 +5,14 @@ export const fetchWeather = createAsyncThunk(
     "weather/fetchWeather",
     async (cityName: string, { rejectWithValue }) => {
         try {
-            const apiKey = "7d3516e9a9e9546a12828d223956c0f8";
+            const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
 
             if (!apiKey) {
                 throw new Error("API key is missing");
             }
 
             const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather`,
+                `${import.meta.env.VITE_WEATHER_API}`,
                 {
                     params: {
                         q: cityName,
@@ -21,7 +21,6 @@ export const fetchWeather = createAsyncThunk(
                     },
                 }
             );
-            console.log(response.data);
             return { cityName, weather: response.data };
         } catch (error) {
             console.error(error);

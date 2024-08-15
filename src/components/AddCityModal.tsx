@@ -28,9 +28,11 @@ export function AddCityModal() {
 
     return (
         <>
-            <Button onPress={onOpen} color="primary">
-                Add city
-            </Button>
+            <div className="flex flex-row justify-end p-4">
+                <Button onPress={onOpen} color="primary">
+                    Add city
+                </Button>
+            </div>
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
