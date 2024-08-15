@@ -30,17 +30,13 @@ const weatherSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(
-                fetchWeather.fulfilled,
-                (state, action: PayloadAction<ICityWeather>) => {
-                    state.loading = false;
-                    state.cities.push(action.payload);
-                }
-            )
+            .addCase(fetchWeather.fulfilled, (state, action) => {
+                state.loading = false;
+                state.cities.push(action.payload);
+            })
             .addCase(fetchWeather.rejected, (state, action) => {
                 state.loading = false;
-                state.error =
-                    action.error.message || "Failed to fetch weather data";
+                state.error = action.payload as string;
             });
     },
 });

@@ -15,22 +15,21 @@ import { AppDispatch } from "../store/store";
 
 export function AddCityModal() {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
     const dispatch = useDispatch<AppDispatch>();
 
     const [cityName, setCityName] = useState("");
 
     const submitCity = () => {
-        if (cityName.trim()) {
-            dispatch(fetchWeather(cityName));
-            onClose();
-            setCityName("");
-        }
+        dispatch(fetchWeather(cityName));
+        onClose();
+        setCityName("");
     };
 
     return (
         <>
             <Button onPress={onOpen} color="primary">
-                Open Modal
+                Add city
             </Button>
             <Modal
                 isOpen={isOpen}
