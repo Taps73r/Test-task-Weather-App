@@ -7,3 +7,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.backgroundColor {
+    background: linear-gradient(150deg, #6ccdb0 0%, #1e3a8a 100%);
+}

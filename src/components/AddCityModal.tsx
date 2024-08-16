@@ -10,7 +10,7 @@ import {
     useDisclosure,
 } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
-import { fetchWeather } from "../store/thunk/fetchWeather";
+import { weatherThunk } from "../store/thunk/weatherThunk";
 import { AppDispatch } from "../store/store";
 
 export function AddCityModal() {
@@ -21,7 +21,7 @@ export function AddCityModal() {
     const [cityName, setCityName] = useState("");
 
     const submitCity = () => {
-        dispatch(fetchWeather(cityName));
+        dispatch(weatherThunk(cityName));
         onClose();
         setCityName("");
     };

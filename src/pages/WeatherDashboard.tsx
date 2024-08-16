@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AddCityModal } from "../components/AddCityModal";
 import { CityCardsList } from "../components/CityCardsList";
-import { fetchWeather } from "../store/thunk/fetchWeather";
+import { weatherThunk } from "../store/thunk/weatherThunk";
 import { AppDispatch } from "../store/store";
 
 export function WeatherDashboard() {
@@ -11,7 +11,7 @@ export function WeatherDashboard() {
     useEffect(() => {
         const storedCities = JSON.parse(localStorage.getItem("cities") || "[]");
         storedCities.forEach((cityName: string) => {
-            dispatch(fetchWeather(cityName));
+            dispatch(weatherThunk(cityName));
         });
     }, [dispatch]);
 

@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ICityWeather } from "../../types/CityWeather";
-import { fetchWeather } from "../thunk/fetchWeather";
+import { weatherThunk } from "../thunk/weatherThunk";
 
-interface WeatherState {
+interface IWeatherState {
     cities: ICityWeather[];
     loading: boolean;
     error: string | null;
 }
 
-const initialState: WeatherState = {
+const initialState: IWeatherState = {
     cities: [],
     loading: false,
     error: null,
@@ -27,11 +27,11 @@ const weatherSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchWeather.pending, (state) => {
+            .addCase(weatherThunk.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchWeather.fulfilled, (state, action) => {
+            .addCase(weatherThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 const existingCityIndex = state.cities.findIndex(
                     (city) => city.cityName === action.payload.cityName
@@ -48,7 +48,7 @@ const weatherSlice = createSlice({
                     );
                 }
             })
-            .addCase(fetchWeather.rejected, (state, action) => {
+            .addCase(weatherThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });

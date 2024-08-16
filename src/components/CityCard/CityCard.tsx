@@ -2,7 +2,7 @@ import { Card } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { removeCity } from "../../store/slices/citiesWeatherSlice";
-import { fetchWeather } from "../../store/thunk/fetchWeather";
+import { weatherThunk } from "../../store/thunk/weatherThunk";
 import { useNavigate } from "react-router-dom";
 import { CityCardBody } from "./CityCardBody";
 import { CityCardHeader } from "./CityCardHeader";
@@ -22,10 +22,6 @@ export function CityCard(props: ICityCardProps) {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
-    const backgroundStyle = {
-        background: "linear-gradient(150deg, #6CCDB0 0%, #1E3A8A 100%)",
-    };
-
     const handleDeleteCard = (e: React.MouseEvent) => {
         e.stopPropagation();
         dispatch(removeCity(props.city));
@@ -33,7 +29,7 @@ export function CityCard(props: ICityCardProps) {
 
     const handleUpdateCard = (e: React.MouseEvent) => {
         e.stopPropagation();
-        dispatch(fetchWeather(props.city));
+        dispatch(weatherThunk(props.city));
     };
 
     const handleCardClick = () => {
@@ -46,8 +42,7 @@ export function CityCard(props: ICityCardProps) {
             onClick={handleCardClick}
         >
             <Card
-                className="w-[320px] p-2 text-white"
-                style={backgroundStyle}
+                className="w-[320px] p-2 text-white backgroundColor"
                 onClick={(e) => e.stopPropagation()}
             >
                 <CityCardHeader

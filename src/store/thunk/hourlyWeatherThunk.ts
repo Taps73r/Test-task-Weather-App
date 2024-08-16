@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { fetchCityCoordinates } from "../../utils/fetchCityCoordinates";
+import { fetchHourlyWeather } from "../../utils/fetchHourlyWeather";
 
-export const fetchWeather = createAsyncThunk(
-    "weather/fetchWeather",
+export const hourlyWeatherThunk = createAsyncThunk(
+    "weather/hourlyWeatherThunk",
     async (cityName: string, { rejectWithValue }) => {
         try {
             const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
@@ -11,17 +13,9 @@ export const fetchWeather = createAsyncThunk(
                 throw new Error("API key is missing");
             }
 
-            const response = await axios.get(
-                `${import.meta.env.VITE_WEATHER_API}`,
-                {
-                    params: {
-                        q: cityName,
-                        appid: apiKey,
-                        units: "metric",
-                    },
-                }
-            );
-            return { cityName, weather: response.data };
+            const { lat, lon } = await fetchCityCoordinates(cityName, apiKey);
+
+            return await fetchHourlyWeather(lat, lon, apiKey);
         } catch (error) {
             console.error(error);
             if (axios.isAxiosError(error)) {
