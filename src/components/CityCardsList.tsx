@@ -3,7 +3,7 @@ import { RootState } from "../store/store";
 import { CityCard } from "./CityCard/CityCard";
 
 export function CityCardsList() {
-    const { cities, error } = useSelector(
+    const { cities } = useSelector(
         (state: RootState) => state.citiesWeatherReducer
     );
 
