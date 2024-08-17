@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Button,
     Input,
@@ -9,9 +9,9 @@ import {
     ModalHeader,
     useDisclosure,
 } from "@nextui-org/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { weatherThunk } from "../store/thunk/weatherThunk";
-import { AppDispatch } from "../store/store";
+import { AppDispatch, RootState } from "../store/store";
 
 export function AddCityModal() {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -19,11 +19,22 @@ export function AddCityModal() {
     const dispatch = useDispatch<AppDispatch>();
 
     const [cityName, setCityName] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const error = useSelector(
+        (state: RootState) => state.citiesWeatherReducer.error
+    );
+
+    useEffect(() => {
+        if (!loading && !error) {
+            onClose();
+            setCityName("");
+        }
+    }, [loading, error, onClose]);
 
     const submitCity = () => {
-        dispatch(weatherThunk(cityName));
-        onClose();
-        setCityName("");
+        setLoading(true);
+        dispatch(weatherThunk(cityName)).finally(() => setLoading(false));
     };
 
     return (
@@ -54,17 +65,26 @@ export function AddCityModal() {
                                     onChange={(e) =>
                                         setCityName(e.target.value)
                                     }
+                                    disabled={loading}
                                 />
+                                {error && (
+                                    <p className="text-red-500 mt-2">{error}. Enter valid city name.</p>
+                                )}
                             </ModalBody>
                             <ModalFooter>
                                 <Button
                                     color="danger"
                                     variant="flat"
                                     onPress={onClose}
+                                    disabled={loading}
                                 >
                                     Close
                                 </Button>
-                                <Button color="primary" onPress={submitCity}>
+                                <Button
+                                    color="primary"
+                                    onPress={submitCity}
+                                    isLoading={loading}
+                                >
                                     Add city
                                 </Button>
                             </ModalFooter>

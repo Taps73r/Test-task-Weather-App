@@ -19,15 +19,20 @@ export function WeatherHeader({
                 <h1 className="text-4xl pb-2 font-bold">{cityName}</h1>
                 <p>{date}</p>
                 <div className="mt-2 flex flex-row items-center">
-                    <p className="text-4xl font-bold">Weather: {conditionText}</p>
-                    <img
-                        className="w-[80px] h-[80px]"
-                        src={`https://openweathermap.org/img/wn/${conditionIcon}@2x.png`}
-                        alt={conditionText}
-                    />
+                    {conditionText && (
+                        <p className="text-4xl font-bold">
+                            Weather: {conditionText}
+                        </p>
+                    )}
+                    {conditionIcon && (
+                        <img
+                            className="w-[80px] h-[80px]"
+                            src={`https://openweathermap.org/img/wn/${conditionIcon}@2x.png`}
+                            alt={conditionText}
+                        />
+                    )}
                 </div>
             </div>
-
             <div>
                 <h2 className="text-4xl">{temperature}°C</h2>
             </div>

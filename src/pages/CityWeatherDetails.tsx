@@ -2,14 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { useEffect } from "react";
 import { hourlyWeatherThunk } from "../store/thunk/hourlyWeatherThunk";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TemperatureChart } from "../components/TemperatureChart";
 import { weatherThunk } from "../store/thunk/weatherThunk";
 import { WeatherHeader } from "../components/WeatherHeader";
 import { WeatherDetails } from "../components/WeatherDetails";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { Button } from "@nextui-org/react";
 
 export function CityWeatherDetails() {
     const { cityName } = useParams();
+    
+    const navigate = useNavigate();
 
     const cityData = useSelector((state: RootState) =>
         state.citiesWeatherReducer.cities.find(
@@ -38,8 +42,35 @@ export function CityWeatherDetails() {
         }
     }, [dispatch, cityName, cityData?.cityName]);
 
+    if (!cityData) {
+        return (
+            <ErrorMessage
+                message="City not found. Please add the city first."
+                buttonText="Go to Homepage"
+            />
+        );
+    }
+
+    if (error) {
+        return (
+            <ErrorMessage
+                message={`Error loading data: ${error}`}
+                buttonText="Try Again"
+                buttonAction={() => {
+                    dispatch(weatherThunk(cityName!));
+                    dispatch(hourlyWeatherThunk(cityName!));
+                }}
+            />
+        );
+    }
+
     return (
         <>
+            <div className="flex justify-center mt-4">
+                <Button onPress={() => navigate("/")} color="primary">
+                    Go to Homepage
+                </Button>
+            </div>
             <WeatherHeader
                 cityName={cityName || ""}
                 date={new Date().toLocaleDateString()}
