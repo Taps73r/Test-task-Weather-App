@@ -44,7 +44,7 @@ export function AddCityModal() {
     return (
         <>
             <div className="flex flex-row justify-end p-4">
-                <Button onPress={onOpen} color="primary">
+                <Button onClick={onOpen} color="primary">
                     Add city
                 </Button>
             </div>
@@ -81,14 +81,14 @@ export function AddCityModal() {
                                 <Button
                                     color="danger"
                                     variant="flat"
-                                    onPress={onClose}
+                                    onClick={onClose}
                                     disabled={loading}
                                 >
                                     Close
                                 </Button>
                                 <Button
                                     color="primary"
-                                    onPress={submitCity}
+                                    onClick={submitCity}
                                     isLoading={loading}
                                 >
                                     Add city
