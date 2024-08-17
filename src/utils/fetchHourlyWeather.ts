@@ -17,6 +17,5 @@ export const fetchHourlyWeather = async (
             },
         }
     );
-    console.log(response.data);
     return response.data;
 };

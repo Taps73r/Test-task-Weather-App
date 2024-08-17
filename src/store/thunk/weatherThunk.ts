@@ -23,7 +23,6 @@ export const weatherThunk = createAsyncThunk(
             );
             return { cityName, weather: response.data };
         } catch (error) {
-            console.error(error);
             if (axios.isAxiosError(error)) {
                 const errorMessage =
                     error.response?.data?.error?.message ||

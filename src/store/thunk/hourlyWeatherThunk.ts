@@ -17,7 +17,6 @@ export const hourlyWeatherThunk = createAsyncThunk(
 
             return await fetchHourlyWeather(lat, lon, apiKey);
         } catch (error) {
-            console.error(error);
             if (axios.isAxiosError(error)) {
                 const errorMessage =
                     error.response?.data?.error?.message ||
