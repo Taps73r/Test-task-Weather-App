@@ -23,4 +23,12 @@ describe("App Component", () => {
 
         expect(screen.getByText("CityWeatherDetails Mock")).toBeInTheDocument();
     });
+
+    it("renders WeatherDashboard on /Abrara route", () => {
+        window.history.pushState({}, "Test Page", "/Abrara");
+
+        render(<App />);
+
+        expect(screen.getByText("WeatherDashboard Mock")).toBeInTheDocument();
+    });
 });
