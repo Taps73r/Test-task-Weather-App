@@ -27,7 +27,7 @@ export function ErrorMessage({
             <p className="text-2xl font-semibold text-red-500 mb-4">
                 {message}
             </p>
-            <Button onPress={handleButtonClick} color="primary">
+            <Button onClick={handleButtonClick} color="primary">
                 {buttonText}
             </Button>
         </div>

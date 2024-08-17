@@ -67,7 +67,7 @@ export function CityWeatherDetails() {
     return (
         <>
             <div className="flex justify-center mt-4">
-                <Button onPress={() => navigate("/")} color="primary">
+                <Button onClick={() => navigate("/")} color="primary">
                     Go to Homepage
                 </Button>
             </div>
