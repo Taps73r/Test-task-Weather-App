@@ -32,9 +32,13 @@ export function AddCityModal() {
         }
     }, [loading, error, onClose]);
 
-    const submitCity = () => {
+    const submitCity = async () => {
         setLoading(true);
-        dispatch(weatherThunk(cityName)).finally(() => setLoading(false));
+        try {
+            await dispatch(weatherThunk(cityName));
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -68,7 +72,9 @@ export function AddCityModal() {
                                     disabled={loading}
                                 />
                                 {error && (
-                                    <p className="text-red-500 mt-2">{error}. Enter valid city name.</p>
+                                    <p className="text-red-500 mt-2">
+                                        {error}. Enter valid city name.
+                                    </p>
                                 )}
                             </ModalBody>
                             <ModalFooter>
